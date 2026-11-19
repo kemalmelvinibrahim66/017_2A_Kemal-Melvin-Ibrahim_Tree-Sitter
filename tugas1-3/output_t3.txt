@@ -22,3 +22,7 @@
 .\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/fungsi.scm --fungsi
 halo (0 parameter) [baris 7]
 tambah (2 parameter) [baris 11]
+
+.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/print.scm --matches
+Match 1: @fn='print' (baris 9) | @args='("Halo dunia!")' (baris 9)
+Match 2: @fn='print' (baris 14) | @args='(a + b)' (baris 14)
