@@ -78,7 +78,24 @@ Kode yang diinspeksi:
 <misal: potongan fungsi def sapa(nama)>
 
 Output inspeksi node anak pada function_definition & parameters:
-<tempel output print(c.type, "bernama" if c.is_named else "anonim") di sini>
+(module (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (string (string_start) (string_content) (string_end)) right: (identifier))))))
+
+--- Anak function_definition (children) ---
+def -> anonim
+identifier -> bernama
+parameters -> bernama
+: -> anonim
+block -> bernama
+
+--- Anak parameters (children) ---
+( -> anonim
+identifier -> bernama
+) -> anonim
+
+--- Hanya named_children di function_definition ---
+identifier
+parameters
+block
 
 Ringkasan perbedaan `children` vs `named_children` (minimal 3 node anonim):
 - Contoh node bernama: <isi min. 3 node bernama>
