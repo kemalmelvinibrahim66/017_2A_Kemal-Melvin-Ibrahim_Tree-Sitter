@@ -71,3 +71,6 @@ module [1:0]
 @modul  baris 3: numpy
 @modul  baris 4: pathlib
 @modul  baris 5: .
+
+.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/docstring.scm --matches
+Match 1: @fn='halo' (baris 7) | @docstring='"""Menyapa dunia."""' (baris 8)
