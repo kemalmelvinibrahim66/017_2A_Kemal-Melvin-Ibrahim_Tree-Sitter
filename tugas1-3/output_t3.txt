@@ -19,3 +19,6 @@
 @id  baris 15: a
 @id  baris 15: b
 
+.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/fungsi.scm --fungsi
+halo (0 parameter) [baris 7]
+tambah (2 parameter) [baris 11]
