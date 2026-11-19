@@ -1,0 +1,19 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node / Tree-sitter build artifacts
+node_modules/
+build/
+target/
+*.so
+*.dll
+*.dylib
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
