@@ -16,3 +16,16 @@ module [1:0]
             string_content [2:12]
             string_end [2:17]
           right: identifier [2:21]
+
+
+Output jelajah.py baris rekursif dan treecursor:
+module [1:0]
+  expression_statement [1:0]
+    assignment [1:0]
+      left: identifier [1:0]
+      right: integer [1:4]
+
+File: ..\ETS-PR\crud\analyzer.py
+Baris rekursif : 828
+Baris TreeCursor: 828
+Output identik : True
