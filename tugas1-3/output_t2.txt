@@ -1,8 +1,27 @@
+================================================================
+TUGAS 2 - PENJELAJAH NODE (jelajah.py)
+================================================================
+
+----------------------------------------------------------------
+1. Uji File Kecil: tugas1-3/kecil.py (1 baris)
+----------------------------------------------------------------
+Perintah:
+python tugas1-3/jelajah.py tugas1-3/kecil.py
+
+Output:
 module [1:0]
   expression_statement [1:0]
     assignment [1:0]
       left: identifier [1:0]
       right: integer [1:4]
+
+----------------------------------------------------------------
+2. Uji File Satu Fungsi: tugas1-3/contoh_fungsi.py (2 baris)
+----------------------------------------------------------------
+Perintah:
+python tugas1-3/jelajah.py tugas1-3/contoh_fungsi.py
+
+Output:
 module [1:0]
   function_definition [1:0]
     name: identifier [1:4]
@@ -16,15 +35,51 @@ module [1:0]
             string_content [2:12]
             string_end [2:17]
           right: identifier [2:21]
+
+----------------------------------------------------------------
+3. Uji File >= 100 Baris: tugas1-3/analyzer.py (102 baris)
+----------------------------------------------------------------
+Perintah:
+python tugas1-3/jelajah.py tugas1-3/analyzer.py
+
+Output lengkap (828 baris node bernama) disimpan di:
+tugas1-3/output_t2_analyzer.txt
+
+----------------------------------------------------------------
+4. Perbandingan Rekursif vs TreeCursor
+----------------------------------------------------------------
+Perintah uji mode --cursor pada tugas1-3/kecil.py:
+python tugas1-3/jelajah.py tugas1-3/kecil.py --cursor
+
+Output:
+module [1:0]
+  expression_statement [1:0]
+    assignment [1:0]
+      left: identifier [1:0]
+      right: integer [1:4]
+
+Verifikasi kesamaan output (--cek) pada seluruh file uji:
+
+$ python tugas1-3/jelajah.py tugas1-3/kecil.py --cek
 File: tugas1-3/kecil.py
 Baris rekursif : 5
 Baris TreeCursor: 5
 Output identik : True
+
+$ python tugas1-3/jelajah.py tugas1-3/contoh_fungsi.py --cek
 File: tugas1-3/contoh_fungsi.py
 Baris rekursif : 13
 Baris TreeCursor: 13
 Output identik : True
-File: ..\ETS-PR\crud\analyzer.py
+
+$ python tugas1-3/jelajah.py tugas1-3/t1.py --cek
+File: tugas1-3/t1.py
+Baris rekursif : 165
+Baris TreeCursor: 165
+Output identik : True
+
+$ python tugas1-3/jelajah.py tugas1-3/analyzer.py --cek
+File: tugas1-3/analyzer.py
 Baris rekursif : 828
 Baris TreeCursor: 828
 Output identik : True
