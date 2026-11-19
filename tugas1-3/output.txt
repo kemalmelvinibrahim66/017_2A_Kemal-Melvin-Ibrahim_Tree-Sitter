@@ -66,7 +66,7 @@ Perkiraan pohon (tulis dulu sebelum menjalankan):
 <isi perkiraan pohonmu di sini>
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
-<tempel output dari terminal di sini>
+(module (class_definition name: (identifier) body: (block (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (string (string_start) (string_content) (string_end))))))))
 
 Perbandingan / Catatan:
 - <bagian mana yang sesuai / berbeda dari perkiraan?>

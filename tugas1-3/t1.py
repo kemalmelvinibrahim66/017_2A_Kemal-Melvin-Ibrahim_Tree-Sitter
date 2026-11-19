@@ -13,5 +13,10 @@ else:
     status = "Ulang"
 """
 
+kode = b"""class Mahasiswa:
+    def halo(self):
+        return "Halo"
+"""
+
 tree = parser.parse(kode)
 print(tree.root_node)
