@@ -18,7 +18,7 @@ Perkiraan pohon (tulis sebelum menjalankan):
         right: (integer)))))
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
-
+(module (expression_statement (assignment left: (identifier) right: (binary_operator left: (integer) right: (integer)))))
 
 Perbandingan / Catatan:
 - Prediksi sudah sesuai: angka `1 + 2` di sisi kanan `=` menjadi node `binary_operator` dengan child `left: (integer)` dan `right: (integer)`.
@@ -35,11 +35,7 @@ Perkiraan pohon (tulis dulu sebelum menjalankan):
 <isi perkiraan pohonmu di sini>
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
-(module (expression_statement
-    (assignment left: (identifier) 
-        right: (binary_operator 
-            left: (integer) 
-                right: (integer)))))
+(module (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (string (string_start) (string_content) (string_end)) right: (identifier))))))
 
 Perbandingan / Catatan:
 - <bagian mana yang sesuai dengan perkiraan?>
@@ -55,7 +51,7 @@ Perkiraan pohon (tulis dulu sebelum menjalankan):
 <isi perkiraan pohonmu di sini>
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
-<tempel output dari terminal di sini>
+(module (if_statement condition: (comparison_operator (identifier) (integer)) consequence: (block (expression_statement (assignment left: (identifier) right: (string (string_start) (string_content) (string_end))))) alternative: (else_clause body: (block (expression_statement (assignment left: (identifier) right: (string (string_start) (string_content) (string_end))))))))
 
 Perbandingan / Catatan:
 - <bagian mana yang sesuai / berbeda dari perkiraan?>
