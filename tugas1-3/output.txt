@@ -1,0 +1,102 @@
+================================================================
+TUGAS 1 - MEMBACA POHON (Tree-sitter Python)
+================================================================
+
+----------------------------------------------------------------
+[CONTOH FORMAT] 0. Pemanasan (dari Commit #2)
+----------------------------------------------------------------
+Kode:
+x = 1 + 2
+
+Perkiraan pohon (tulis sebelum menjalankan):
+(module
+  (expression_statement
+    (assignment
+      left: (identifier)
+      right: (binary_operator
+        left: (integer)
+        right: (integer)))))
+
+Hasil sebenarnya (output `python tugas1-3/t1.py`):
+
+
+Perbandingan / Catatan:
+- Prediksi sudah sesuai: angka `1 + 2` di sisi kanan `=` menjadi node `binary_operator` dengan child `left: (integer)` dan `right: (integer)`.
+- Tanda `=` dan `+` tidak tampil di S-expression karena termasuk node anonim.
+
+----------------------------------------------------------------
+1. Potongan 1 - Fungsi (Commit #3)
+----------------------------------------------------------------
+Kode:
+def sapa(nama):
+    return "Halo " + nama
+
+Perkiraan pohon (tulis dulu sebelum menjalankan):
+<isi perkiraan pohonmu di sini>
+
+Hasil sebenarnya (output `python tugas1-3/t1.py`):
+(module (expression_statement
+    (assignment left: (identifier) 
+        right: (binary_operator 
+            left: (integer) 
+                right: (integer)))))
+
+Perbandingan / Catatan:
+- <bagian mana yang sesuai dengan perkiraan?>
+- <node apa yang baru / berbeda dari perkiraan?>
+
+----------------------------------------------------------------
+2. Potongan 2 - if / else (Commit #4)
+----------------------------------------------------------------
+Kode:
+<isi potongan kode if/else kamu di sini>
+
+Perkiraan pohon (tulis dulu sebelum menjalankan):
+<isi perkiraan pohonmu di sini>
+
+Hasil sebenarnya (output `python tugas1-3/t1.py`):
+<tempel output dari terminal di sini>
+
+Perbandingan / Catatan:
+- <bagian mana yang sesuai / berbeda dari perkiraan?>
+
+----------------------------------------------------------------
+3. Potongan 3 - Kelas dengan satu method (Commit #5)
+----------------------------------------------------------------
+Kode:
+<isi potongan kode class kamu di sini>
+
+Perkiraan pohon (tulis dulu sebelum menjalankan):
+<isi perkiraan pohonmu di sini>
+
+Hasil sebenarnya (output `python tugas1-3/t1.py`):
+<tempel output dari terminal di sini>
+
+Perbandingan / Catatan:
+- <bagian mana yang sesuai / berbeda dari perkiraan?>
+
+----------------------------------------------------------------
+4. Node Bernama vs Node Anonim (Commit #6 - Langkah 5)
+----------------------------------------------------------------
+Kode yang diinspeksi:
+<misal: potongan fungsi def sapa(nama)>
+
+Output inspeksi node anak pada function_definition & parameters:
+<tempel output print(c.type, "bernama" if c.is_named else "anonim") di sini>
+
+Ringkasan perbedaan `children` vs `named_children` (minimal 3 node anonim):
+- Contoh node bernama: <isi min. 3 node bernama>
+- Contoh node anonim yang tersembunyi: <isi min. 3 node anonim, misal def, :, (, )>
+- Penjelasan singkat: <jelaskan perbedaan children dan named_children dengan contoh di atas>
+
+----------------------------------------------------------------
+5. Uji Error Recovery - Node ERROR / MISSING (Commit #7 - Langkah 6)
+----------------------------------------------------------------
+Kode yang sengaja dirusak (bagian yang dihapus: ...):
+<isi kode yang dirusak, misal hapus tanda ':' atau ')'>
+
+Hasil sebenarnya (output `python tugas1-3/t1.py`):
+<tempel output yang memunculkan ERROR atau MISSING di sini>
+
+Catatan:
+- <node ERROR atau MISSING muncul di bagian mana dan mengapa?>
