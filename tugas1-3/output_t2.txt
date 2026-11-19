@@ -16,15 +16,14 @@ module [1:0]
             string_content [2:12]
             string_end [2:17]
           right: identifier [2:21]
-
-
-Output jelajah.py baris rekursif dan treecursor:
-module [1:0]
-  expression_statement [1:0]
-    assignment [1:0]
-      left: identifier [1:0]
-      right: integer [1:4]
-
+File: tugas1-3/kecil.py
+Baris rekursif : 5
+Baris TreeCursor: 5
+Output identik : True
+File: tugas1-3/contoh_fungsi.py
+Baris rekursif : 13
+Baris TreeCursor: 13
+Output identik : True
 File: ..\ETS-PR\crud\analyzer.py
 Baris rekursif : 828
 Baris TreeCursor: 828
