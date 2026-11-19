@@ -32,50 +32,91 @@ def sapa(nama):
     return "Halo " + nama
 
 Perkiraan pohon (tulis dulu sebelum menjalankan):
-<isi perkiraan pohonmu di sini>
+(module
+  (function_definition
+    name: (identifier)
+    parameters: (parameters (identifier))
+    body: (block
+      (return_statement
+        (binary_operator
+          left: (string)
+          right: (identifier))))))
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
 (module (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (string (string_start) (string_content) (string_end)) right: (identifier))))))
 
 Perbandingan / Catatan:
-- <bagian mana yang sesuai dengan perkiraan?>
-- <node apa yang baru / berbeda dari perkiraan?>
+- Struktur utama `function_definition` (`name:`, `parameters:`, `body:`) dan `return_statement` berisi `binary_operator` sesuai dengan perkiraan.
+- Perbedaan yang ditemukan: node `(string)` di tree-sitter-python bukan node daun tunggal, melainkan punya 3 anak bernama: `(string_start)`, `(string_content)`, dan `(string_end)`.
 
 ----------------------------------------------------------------
 2. Potongan 2 - if / else (Commit #4)
 ----------------------------------------------------------------
 Kode:
-<isi potongan kode if/else kamu di sini>
+if nilai >= 75:
+    status = "Lulus"
+else:
+    status = "Ulang"
 
 Perkiraan pohon (tulis dulu sebelum menjalankan):
-<isi perkiraan pohonmu di sini>
+(module
+  (if_statement
+    condition: (comparison_operator
+      left: (identifier)
+      right: (integer))
+    consequence: (block
+      (expression_statement
+        (assignment
+          left: (identifier)
+          right: (string))))
+    alternative: (else_clause
+      body: (block
+        (expression_statement
+          (assignment
+            left: (identifier)
+            right: (string)))))))
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
 (module (if_statement condition: (comparison_operator (identifier) (integer)) consequence: (block (expression_statement (assignment left: (identifier) right: (string (string_start) (string_content) (string_end))))) alternative: (else_clause body: (block (expression_statement (assignment left: (identifier) right: (string (string_start) (string_content) (string_end))))))))
 
 Perbandingan / Catatan:
-- <bagian mana yang sesuai / berbeda dari perkiraan?>
+- Field `condition:`, `consequence:`, dan `alternative:` pada `if_statement` serta `else_clause` dengan `body: (block ...)` sesuai dengan perkiraan.
+- Perbedaan yang ditemukan: `comparison_operator` ternyata tidak memberi label `left:`/`right:` pada child-nya seperti `binary_operator`, melainkan langsung `(identifier)` dan `(integer)` (operator `>=` menjadi node anonim).
+- Sama seperti Potongan 1, literal string dipecah menjadi `(string (string_start) (string_content) (string_end))`.
 
 ----------------------------------------------------------------
 3. Potongan 3 - Kelas dengan satu method (Commit #5)
 ----------------------------------------------------------------
 Kode:
-<isi potongan kode class kamu di sini>
+class Mahasiswa:
+    def halo(self):
+        return "Halo"
 
 Perkiraan pohon (tulis dulu sebelum menjalankan):
-<isi perkiraan pohonmu di sini>
+(module
+  (class_definition
+    name: (identifier)
+    body: (block
+      (function_definition
+        name: (identifier)
+        parameters: (parameters (identifier))
+        body: (block
+          (return_statement (string)))))))
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
 (module (class_definition name: (identifier) body: (block (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (string (string_start) (string_content) (string_end))))))))
 
 Perbandingan / Catatan:
-- <bagian mana yang sesuai / berbeda dari perkiraan?>
+- Susunan `class_definition` dengan `name: (identifier)` dan `body: (block ...)` sesuai dengan perkiraan.
+- Method di dalam kelas tetap direpresentasikan sebagai node `function_definition` biasa, dan `self` dianggap sebagai `(identifier)` di dalam `parameters`.
+- Perbedaan kecil yang sama: `(string)` memiliki anak `(string_start)`, `(string_content)`, dan `(string_end)`.
 
 ----------------------------------------------------------------
 4. Node Bernama vs Node Anonim (Commit #6 - Langkah 5)
 ----------------------------------------------------------------
 Kode yang diinspeksi:
-<misal: potongan fungsi def sapa(nama)>
+def sapa(nama):
+    return "Halo " + nama
 
 Output inspeksi node anak pada function_definition & parameters:
 (module (function_definition name: (identifier) parameters: (parameters (identifier)) body: (block (return_statement (binary_operator left: (string (string_start) (string_content) (string_end)) right: (identifier))))))
@@ -98,15 +139,16 @@ parameters
 block
 
 Ringkasan perbedaan `children` vs `named_children` (minimal 3 node anonim):
-- Contoh node bernama: <isi min. 3 node bernama>
-- Contoh node anonim yang tersembunyi: <isi min. 3 node anonim, misal def, :, (, )>
-- Penjelasan singkat: <jelaskan perbedaan children dan named_children dengan contoh di atas>
+- Contoh node bernama: `function_definition`, `identifier`, `parameters`, `block`, `return_statement`
+- Contoh node anonim yang tersembunyi: `def`, `:`, `(`, `)` (dari hasil inspeksi `function_definition` dan `parameters`)
+- Penjelasan singkat: `children` mengembalikan seluruh child node pada pohon termasuk keyword dan tanda baca anonim (`is_named == False`) seperti `def`, `:`, `(`, `)`. Sebaliknya, `named_children` menyaring token anonim tersebut sehingga hanya menampilkan node yang memiliki nama rule di grammar (`identifier`, `parameters`, `block`), sesuai dengan yang dicetak oleh S-expression `tree.root_node`.
 
 ----------------------------------------------------------------
 5. Uji Error Recovery - Node ERROR / MISSING (Commit #7 - Langkah 6)
 ----------------------------------------------------------------
-Kode yang sengaja dirusak (bagian yang dihapus: ...):
-hapus tanda ":" di "def sapa(nama)" harusnya "def sapa(nama):"
+Kode yang sengaja dirusak (hapus tanda ":" setelah `def sapa(nama)`):
+def sapa(nama)
+    return "Halo " + nama
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
 has_error: True
@@ -120,4 +162,6 @@ return -> anonim
 expression_statement -> bernama
 
 Catatan:
-- <node ERROR atau MISSING muncul di bagian mana dan mengapa?>
+- Node `(ERROR ...)` muncul langsung sebagai child pertama di bawah `module` menggantikan `function_definition`, dan `tree.root_node.has_error` bernilai `True`.
+- Walaupun deklarasi fungsi rusak karena `:` dihapus, fitur error recovery Tree-sitter tetap mempertahankan pohon dan masih berhasil mengenali `identifier` (`sapa`), `parameters` (`nama`), serta baris isi di bawahnya sebagai `expression_statement` berisi `binary_operator`, dengan `def` dan `return` tersimpan sebagai node anonim di dalam `ERROR`.
+- Karena `root_node.children[0]` bertipe `ERROR` (bukan `function_definition`), field `parameters:` tidak ada sehingga `fn.child_by_field_name("parameters")` bernilai `None`.
