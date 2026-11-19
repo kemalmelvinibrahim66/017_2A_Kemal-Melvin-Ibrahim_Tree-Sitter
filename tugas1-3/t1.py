@@ -14,22 +14,20 @@ parser = Parser(Language(tspython.language()))
 #         return "Halo"
 # """
 
-kode = b"""def sapa(nama):
+kode = b"""def sapa(nama)
     return "Halo " + nama
 """
 tree = parser.parse(kode)
+print("has_error:", tree.root_node.has_error)
 print(tree.root_node)
 
 fn = tree.root_node.children[0]
-print("\n--- Anak function_definition (children) ---")
+print("\n--- Anak root_node.children[0] ---")
 for c in fn.children:
     print(c.type, "-> bernama" if c.is_named else "-> anonim")
-
-params = fn.child_by_field_name("parameters")
-print("\n--- Anak parameters (children) ---")
-for c in params.children:
-    print(c.type, "-> bernama" if c.is_named else "-> anonim")
     
-print("\n--- Hanya named_children di function_definition ---")
-for c in fn.named_children:
-    print(c.type)
+params = fn.child_by_field_name("parameters")
+if params:
+    print("\n--- Anak parameters (children) ---")
+    for c in params.children:
+        print(c.type, "-> bernama" if c.is_named else "-> anonim")

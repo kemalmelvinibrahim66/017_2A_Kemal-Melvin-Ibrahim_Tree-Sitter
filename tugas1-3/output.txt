@@ -106,10 +106,18 @@ Ringkasan perbedaan `children` vs `named_children` (minimal 3 node anonim):
 5. Uji Error Recovery - Node ERROR / MISSING (Commit #7 - Langkah 6)
 ----------------------------------------------------------------
 Kode yang sengaja dirusak (bagian yang dihapus: ...):
-<isi kode yang dirusak, misal hapus tanda ':' atau ')'>
+hapus tanda ":" di "def sapa(nama)" harusnya "def sapa(nama):"
 
 Hasil sebenarnya (output `python tugas1-3/t1.py`):
-<tempel output yang memunculkan ERROR atau MISSING di sini>
+has_error: True
+(module (ERROR (identifier) (parameters (identifier)) (expression_statement (binary_operator left: (string (string_start) (string_content) (string_end)) right: (identifier)))))
+
+--- Anak root_node.children[0] ---
+def -> anonim
+identifier -> bernama
+parameters -> bernama
+return -> anonim
+expression_statement -> bernama
 
 Catatan:
 - <node ERROR atau MISSING muncul di bagian mana dan mengapa?>
