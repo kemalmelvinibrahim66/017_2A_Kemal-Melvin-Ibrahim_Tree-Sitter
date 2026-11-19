@@ -1,76 +1,25 @@
-.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/semua.scm
-@id  baris 1: os
-@id  baris 2: sys
-@id  baris 2: json
-@id  baris 3: numpy
-@id  baris 3: np
-@id  baris 4: pathlib
-@id  baris 4: Path
-@id  baris 5: utils
-@id  baris 7: halo
-@id  baris 9: print
-@id  baris 11: tambah
-@id  baris 11: a
-@id  baris 11: b
-@id  baris 12: pesan
-@id  baris 14: print
-@id  baris 14: a
-@id  baris 14: b
-@id  baris 15: a
-@id  baris 15: b
-
-.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/fungsi.scm --fungsi
+=== UJI PADA contoh_q.py ===
 halo (0 parameter) [baris 7]
 tambah (2 parameter) [baris 11]
-
-.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/print.scm --matches
 Match 1: @fn='print' (baris 9) | @args='("Halo dunia!")' (baris 9)
 Match 2: @fn='print' (baris 14) | @args='(a + b)' (baris 14)
-
-.\.venv\Scripts\python.exe tugas1-3/jelajah.py tugas1-3/contoh_q.py | Select-Object -First 35
-module [1:0]
-  import_statement [1:0]
-    name: dotted_name [1:7]
-      identifier [1:7]
-  import_statement [2:0]
-    name: dotted_name [2:7]
-      identifier [2:7]
-    name: dotted_name [2:12]
-      identifier [2:12]
-  import_statement [3:0]
-    name: aliased_import [3:7]
-      name: dotted_name [3:7]
-        identifier [3:7]
-      alias: identifier [3:16]
-  import_from_statement [4:0]
-    module_name: dotted_name [4:5]
-      identifier [4:5]
-    name: dotted_name [4:20]
-      identifier [4:20]
-  import_from_statement [5:0]
-    module_name: relative_import [5:5]
-      import_prefix [5:5]
-    name: dotted_name [5:14]
-      identifier [5:14]
-  function_definition [7:0]
-    name: identifier [7:4]
-    parameters: parameters [7:8]
-    body: block [8:4]
-      expression_statement [8:4]
-        string [8:4]
-          string_start [8:4]
-          string_content [8:7]
-          string_end [8:21]
-      expression_statement [9:4]
-        call [9:4]
-
-.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/import.scm
 @modul  baris 1: os
 @modul  baris 2: sys
 @modul  baris 2: json
 @modul  baris 3: numpy
 @modul  baris 4: pathlib
 @modul  baris 5: .
-
-.\.venv\Scripts\python.exe tugas1-3/q.py tugas1-3/contoh_q.py tugas1-3/docstring.scm --matches
 Match 1: @fn='halo' (baris 7) | @docstring='"""Menyapa dunia."""' (baris 8)
+
+=== UJI PADA analyzer.py ===
+analyze_statement (1 parameter) [baris 7]
+_collect_select (3 parameter) [baris 31]
+_collect (3 parameter) [baris 50]
+column_usage (1 parameter) [baris 78]
+reads (1 parameter) [baris 83]
+@modul  baris 2: collections
+@modul  baris 4: .
+Match 1: @fn='analyze_statement' (baris 7) | @docstring='"""Mengembalikan {nama_tabel: {operasi}} untuk satu statement."""' (baris 8)
+Match 2: @fn='_collect_select' (baris 31) | @docstring='"""Menandai semua tabel di SELECT (termasuk subquery-nya) dengan `op`."""' (baris 32)
+Match 3: @fn='_collect' (baris 50) | @docstring='"""Menandai tabel di setiap subquery di dalam ekspresi dengan `op`."""' (baris 51)
+Match 4: @fn='column_usage' (baris 78) | @docstring='"""Penggunaan kolom (tabel, kolom, operasi). Membutuhkan resolver sudah\r\n    dijalankan, karena memakai ColumnRef.resolved."""' (baris 79)
