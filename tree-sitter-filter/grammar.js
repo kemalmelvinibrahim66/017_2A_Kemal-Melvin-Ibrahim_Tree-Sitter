@@ -12,12 +12,28 @@ export default grammar({
   rules: {
     query: $ => $._expr,
 
-    _expr: $ => choice($.comparison, $.and_expression, $.or_expression, $.parenthesized, $.not_expression),
-    comparison: $ => seq(
+    _expr: $ => choice(
+    $.comparison,
+    $.and_expression,
+    $.or_expression,
+    $.not_expression,
+    $.parenthesized,
+    $.in_expression,
+  ),
+
+  comparison: $ => seq(
     field('field', $.identifier),
-    field('operator', choice('=', '!=', '>', '<', '>=', '<=')),
+    field('operator', choice('=', '!=', '>', '<', '>=', '<=', 'contains')),
     field('value', $._value),
   ),
+
+  in_expression: $ => seq(
+    field('field', $.identifier),
+    'in',
+    field('values', $.value_list),
+  ),
+
+  value_list: $ => seq('(', $._value, repeat(seq(',', $._value)), ')'),
 
     and_expression: $ => prec.left(2, seq(field('left', $._expr), 'and', field('right', $._expr))),
     or_expression: $ => prec.left(1, seq(field('left', $._expr), 'or', field('right', $._expr))),

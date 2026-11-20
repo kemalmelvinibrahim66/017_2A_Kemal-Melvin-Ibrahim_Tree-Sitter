@@ -81,3 +81,31 @@ language grammars.
     (comparison [1, 4] - [1, 19]
       (identifier [1, 4] - [1, 12])
       (boolean [1, 15] - [1, 19]))))
+
+tree-sitter parse contoh.filter
+Warning: You have not configured any parser directories!
+Please run `tree-sitter init-config` and edit the resulting
+configuration file to indicate where we should look for
+language grammars.
+
+(query [0, 0] - [0, 114]
+  (and_expression [0, 0] - [0, 114]
+    left: (and_expression [0, 0] - [0, 90]
+      left: (in_expression [0, 0] - [0, 42]
+        field: (identifier [0, 0] - [0, 6])
+        values: (value_list [0, 10] - [0, 42]
+          (string [0, 11] - [0, 17])
+          (string [0, 19] - [0, 28])
+          (string [0, 30] - [0, 41])))
+      right: (parenthesized [0, 47] - [0, 90]
+        (or_expression [0, 48] - [0, 89]
+          left: (comparison [0, 48] - [0, 61]
+            field: (identifier [0, 48] - [0, 56])
+            value: (number [0, 60] - [0, 61]))
+          right: (comparison [0, 65] - [0, 89]
+            field: (identifier [0, 65] - [0, 70])
+            value: (string [0, 80] - [0, 89])))))
+    right: (not_expression [0, 95] - [0, 114]
+      operand: (comparison [0, 99] - [0, 114]
+        field: (identifier [0, 99] - [0, 107])
+        value: (boolean [0, 110] - [0, 114])))))
