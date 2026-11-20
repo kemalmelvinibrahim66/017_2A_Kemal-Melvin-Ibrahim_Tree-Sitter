@@ -1,2 +1,0 @@
-tree-sitter highlight contoh.filter
-status in ("open", "pending", "escalated") and (priority >= 2 or title contains "invoice") and not archived = true
