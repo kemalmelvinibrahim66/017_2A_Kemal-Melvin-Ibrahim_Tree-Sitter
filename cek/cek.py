@@ -31,8 +31,20 @@ def cek_file(path: Path):
         if jumlah_baris > 30:
             print(f"[PANJANG] {path}:{fn.start_point[0] + 1}: fungsi '{nama}' ({jumlah_baris} baris)")
 
-    # Fitur 3 (TODO): file yang pohonnya mengandung error
+    # Fitur 3: file yang pohonnya mengandung error
+    if tree.root_node.has_error:
+        err = cari_error_pertama(tree.root_node)
+        baris = err.start_point[0] + 1 if err else 1
+        print(f"[ERROR] {path}:{baris}: file mengandung syntax error")
 
+def cari_error_pertama(node):
+    if node.is_error or node.is_missing:
+        return node
+    for child in node.children:
+        hasil = cari_error_pertama(child)
+        if hasil is not None:
+            return hasil
+    return None
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
