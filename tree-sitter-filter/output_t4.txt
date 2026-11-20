@@ -49,3 +49,23 @@ language grammars.
       (comparison [1, 19] - [1, 24]
         (identifier [1, 19] - [1, 20])
         (number [1, 23] - [1, 24])))))
+
+tree-sitter parse contoh.filter
+Warning: You have not configured any parser directories!
+Please run `tree-sitter init-config` and edit the resulting
+configuration file to indicate where we should look for
+language grammars.
+
+(query [1, 0] - [1, 26]
+  (and_expression [1, 0] - [1, 26]
+    (parenthesized [1, 0] - [1, 16]
+      (or_expression [1, 1] - [1, 15]
+        (comparison [1, 1] - [1, 6]
+          (identifier [1, 1] - [1, 2])
+          (number [1, 5] - [1, 6]))
+        (comparison [1, 10] - [1, 15]
+          (identifier [1, 10] - [1, 11])
+          (number [1, 14] - [1, 15]))))
+    (comparison [1, 21] - [1, 26]
+      (identifier [1, 21] - [1, 22])
+      (number [1, 25] - [1, 26]))))
