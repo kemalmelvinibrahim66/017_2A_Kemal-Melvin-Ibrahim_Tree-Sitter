@@ -1,3 +1,32 @@
+================================================================
+TUGAS 6 - MINI PROYEK: PENDETEKSI TODO, FUNGSI PANJANG, & ERROR
+================================================================
+
+----------------------------------------------------------------
+1. Uji pada Folder Lokal (cek/uji) - Python & JavaScript
+----------------------------------------------------------------
+Perintah:
+python cek/cek.py cek/uji
+
+Output:
+[TODO] cek\uji\ada_todo.py:1: # TODO: rapikan pesan sambutan
+[TODO] cek\uji\ada_todo.py:3: # FIXME: validasi jika nama kosong
+[TODO] cek\uji\contoh.js:1: // TODO: rapikan fungsi hitung
+[PANJANG] cek\uji\contoh.js:4: fungsi 'prosesPanjangJS' (33 baris)
+[PANJANG] cek\uji\fungsi_panjang.py:5: fungsi 'proses_panjang' (32 baris)
+[ERROR] cek\uji\rusak.js:1: file mengandung syntax error
+[ERROR] cek\uji\sintaks_rusak.py:1: file mengandung syntax error
+
+Catatan:
+- String jebakan "TODO: ..." di ada_todo.py dan contoh.js tidak ikut tertangkap.
+
+----------------------------------------------------------------
+2. Uji pada Repositori Nyata (https://github.com/bottlepy/bottle)
+----------------------------------------------------------------
+Perintah:
+python cek/cek.py ..\bottle
+
+Output (26 temuan):
 [TODO] ..\bottle\bottle.py:1002: # TODO: Handle these explicitly in handle() or make them iterable.
 [TODO] ..\bottle\bottle.py:2004: #: Not a plugin, but part of the plugin API. TODO: Find a better place.
 [TODO] ..\bottle\bottle.py:2837: # HTTP Utilities and MISC (TODO) ###############################################
@@ -24,3 +53,20 @@
 [TODO] ..\bottle\test\test_html_helper.py:8: # TODO: Move more of the low level http stuff here.
 [PANJANG] ..\bottle\test\test_sendfile.py:118: fungsi 'test_etag' (35 baris)
 [PANJANG] ..\bottle\test\tools.py:89: fungsi 'urlopen' (33 baris)
+
+----------------------------------------------------------------
+3. Verifikasi Manual 2 File Acak dari Repositori bottle
+----------------------------------------------------------------
+1) File 1: ..\bottle\test\test_html_helper.py (23 baris)
+   - Hitungan manual:
+     * Komentar TODO/FIXME: 1 (baris 8: `# TODO: Move more of the low level http stuff here.`)
+     * Fungsi > 30 baris: 0 (hanya 1 fungsi `test_accept_header` di baris 10..23)
+     * Syntax error: 0
+   - Output cek.py: 1 TODO di baris 8, 0 fungsi panjang, 0 error -> COCOK.
+
+2) File 2: ..\bottle\test\test_config.py (210 baris)
+   - Hitungan manual:
+     * Komentar TODO/FIXME: 0
+     * Fungsi > 30 baris: 1 (`test_overlay` dari baris 106 s.d. baris 166 = 61 baris; 13 fungsi lainnya <= 23 baris)
+     * Syntax error: 0
+   - Output cek.py: 0 TODO, 1 fungsi panjang (`test_overlay` baris 106, 61 baris), 0 error -> COCOK.
