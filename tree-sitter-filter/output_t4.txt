@@ -1,9 +1,17 @@
-tree-sitter parse contoh.filter
-Warning: You have not configured any parser directories!
-Please run `tree-sitter init-config` and edit the resulting
-configuration file to indicate where we should look for
-language grammars.
+================================================================
+TUGAS 4 - GRAMMAR DSL FILTER (tree-sitter-filter)
+================================================================
 
+----------------------------------------------------------------
+1. Langkah 4b: Rule _expr, and_expression, dan word
+----------------------------------------------------------------
+Input (contoh.filter):
+a = 1 and b = 2
+
+Perintah:
+tree-sitter parse contoh.filter
+
+Output:
 (query [1, 0] - [1, 15]
   (and_expression [1, 0] - [1, 15]
     (comparison [1, 0] - [1, 5]
@@ -13,30 +21,40 @@ language grammars.
       (identifier [1, 10] - [1, 11])
       (number [1, 14] - [1, 15]))))
 
+----------------------------------------------------------------
+2. Langkah 4c (Eksperimen): Unresolved Conflict Tanpa prec
+----------------------------------------------------------------
+Perintah:
 tree-sitter generate
+
+Output:
 Error: Error when generating parser
 
 Caused by:
     Unresolved conflict for symbol sequence:
-    
+
       _expr  'or'  _expr  •  'or'  …
-    
+
     Possible interpretations:
-    
+
       1:  (or_expression  _expr  'or'  _expr)  •  'or'  …
       2:  _expr  'or'  (or_expression  _expr  •  'or'  _expr)
 
     Possible resolutions:
 
-      1:  Specify a left or right associativity in `or_expression`      
+      1:  Specify a left or right associativity in `or_expression`
       2:  Add a conflict for these rules: `or_expression`
 
-tree-sitter parse contoh.filter
-Warning: You have not configured any parser directories!
-Please run `tree-sitter init-config` and edit the resulting
-configuration file to indicate where we should look for
-language grammars.
+----------------------------------------------------------------
+3. Langkah 4c (Perbaikan): or_expression dengan prec.left(1)
+----------------------------------------------------------------
+Input (contoh.filter):
+a = 1 or b = 2 and c = 3
 
+Perintah:
+tree-sitter parse contoh.filter
+
+Output:
 (query [1, 0] - [1, 24]
   (or_expression [1, 0] - [1, 24]
     (comparison [1, 0] - [1, 5]
@@ -50,12 +68,16 @@ language grammars.
         (identifier [1, 19] - [1, 20])
         (number [1, 23] - [1, 24])))))
 
-tree-sitter parse contoh.filter
-Warning: You have not configured any parser directories!
-Please run `tree-sitter init-config` and edit the resulting
-configuration file to indicate where we should look for
-language grammars.
+----------------------------------------------------------------
+4. Langkah 4d: Ekspresi Tanda Kurung (parenthesized)
+----------------------------------------------------------------
+Input (contoh.filter):
+(a = 1 or b = 2) and c = 3
 
+Perintah:
+tree-sitter parse contoh.filter
+
+Output:
 (query [1, 0] - [1, 26]
   (and_expression [1, 0] - [1, 26]
     (parenthesized [1, 0] - [1, 16]
@@ -70,24 +92,32 @@ language grammars.
       (identifier [1, 21] - [1, 22])
       (number [1, 25] - [1, 26]))))
 
-tree-sitter parse contoh.filter
-Warning: You have not configured any parser directories!
-Please run `tree-sitter init-config` and edit the resulting
-configuration file to indicate where we should look for
-language grammars.
+----------------------------------------------------------------
+5. Langkah 4e: not_expression dan nilai boolean
+----------------------------------------------------------------
+Input (contoh.filter):
+not archived = true
 
+Perintah:
+tree-sitter parse contoh.filter
+
+Output:
 (query [1, 0] - [1, 19]
   (not_expression [1, 0] - [1, 19]
     (comparison [1, 4] - [1, 19]
       (identifier [1, 4] - [1, 12])
       (boolean [1, 15] - [1, 19]))))
 
-tree-sitter parse contoh.filter
-Warning: You have not configured any parser directories!
-Please run `tree-sitter init-config` and edit the resulting
-configuration file to indicate where we should look for
-language grammars.
+----------------------------------------------------------------
+6. Langkah 4f & Langkah 8: Gabungan Lengkap (field, in, contains)
+----------------------------------------------------------------
+Input (contoh.filter):
+status in ("open", "pending", "escalated") and (priority >= 2 or title contains "invoice") and not archived = true
 
+Perintah:
+tree-sitter parse contoh.filter
+
+Output:
 (query [0, 0] - [0, 114]
   (and_expression [0, 0] - [0, 114]
     left: (and_expression [0, 0] - [0, 90]
@@ -109,3 +139,41 @@ language grammars.
       operand: (comparison [0, 99] - [0, 114]
         field: (identifier [0, 99] - [0, 107])
         value: (boolean [0, 110] - [0, 114])))))
+
+----------------------------------------------------------------
+7. Verifikasi Corpus Test (test/corpus/dasar.txt)
+----------------------------------------------------------------
+Perintah:
+tree-sitter test
+
+Output:
+  dasar:
+      1. ✓ perbandingan dengan string
+      2. ✓ perbandingan dengan angka
+      3. ✓ ekspresi and
+      4. ✓ and lebih kuat dari or
+      5. ✓ tanda kurung mengubah prioritas
+      6. ✓ not expression dan boolean
+      7. ✓ ekspresi in dengan tiga nilai
+      8. ✓ ekspresi contains
+
+Total parses: 8; successful parses: 8; failed parses: 0; success percentage: 100.00%; average speed: 2273 bytes/ms
+
+----------------------------------------------------------------
+8. [Pengayaan] Konversi AST ke SQL WHERE Berparameter (filter_to_sql.py)
+----------------------------------------------------------------
+Perintah:
+python tree-sitter-filter/filter_to_sql.py
+
+Output:
+Input : status = "open" and (priority >= 2 or title contains "invoice")
+SQL   : WHERE status = ? AND (priority >= ? OR title LIKE ?)
+Params: ['open', 2, '%invoice%']
+---
+Input : status in ("open", "pending", "closed") and not archived = true
+SQL   : WHERE status IN (?, ?, ?) AND NOT (archived = ?)
+Params: ['open', 'pending', 'closed', True]
+---
+Input : owner = "budi' OR '1'='1"
+SQL   : WHERE owner = ?
+Params: ["budi' OR '1'='1"]
