@@ -13,3 +13,39 @@ language grammars.
       (identifier [1, 10] - [1, 11])
       (number [1, 14] - [1, 15]))))
 
+tree-sitter generate
+Error: Error when generating parser
+
+Caused by:
+    Unresolved conflict for symbol sequence:
+    
+      _expr  'or'  _expr  •  'or'  …
+    
+    Possible interpretations:
+    
+      1:  (or_expression  _expr  'or'  _expr)  •  'or'  …
+      2:  _expr  'or'  (or_expression  _expr  •  'or'  _expr)
+
+    Possible resolutions:
+
+      1:  Specify a left or right associativity in `or_expression`      
+      2:  Add a conflict for these rules: `or_expression`
+
+tree-sitter parse contoh.filter
+Warning: You have not configured any parser directories!
+Please run `tree-sitter init-config` and edit the resulting
+configuration file to indicate where we should look for
+language grammars.
+
+(query [1, 0] - [1, 24]
+  (or_expression [1, 0] - [1, 24]
+    (comparison [1, 0] - [1, 5]
+      (identifier [1, 0] - [1, 1])
+      (number [1, 4] - [1, 5]))
+    (and_expression [1, 9] - [1, 24]
+      (comparison [1, 9] - [1, 14]
+        (identifier [1, 9] - [1, 10])
+        (number [1, 13] - [1, 14]))
+      (comparison [1, 19] - [1, 24]
+        (identifier [1, 19] - [1, 20])
+        (number [1, 23] - [1, 24])))))
